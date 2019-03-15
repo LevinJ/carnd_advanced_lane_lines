@@ -195,6 +195,16 @@ class FindLine:
         ## End visualization steps ##
         
         return result,left_fit,right_fit
+    def cal_distance_analystic(self,left_fit,right_fit):
+        a_left , b_left, c_left = left_fit
+        a_right , b_right, c_right = right_fit
+        
+        ys = np.linspace(0, 719, 720 )
+        
+        d = (a_right - a_left) * ys * ys + (b_right - b_left) * ys + (c_right - c_left)
+        
+        
+        return d
 
     def run(self):
         # Load our image
@@ -205,6 +215,8 @@ class FindLine:
 #         right_fit = np.array([4.17622148e-04, -4.93848953e-01,  1.11806170e+03])
         out_img,left_fit,right_fit = self.search_around_poly(binary_warped,left_fit, right_fit)
         print("left_fit={},right_fit={}".format(left_fit,right_fit))
+        
+        self.cal_distance_analystic(left_fit, right_fit)
 
         plt.imshow(out_img)
         plt.show()
